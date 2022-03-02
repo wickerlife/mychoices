@@ -4,8 +4,11 @@ import 'package:mychoices/app/core/values/colors.dart';
 
 class CAppBar extends StatelessWidget {
   final IconData? leadingIcon;
+  final VoidCallback? leadingFunction;
   final IconData? trailingIcon;
+  final VoidCallback? trailingFunction;
   final String? trailingImage;
+  final VoidCallback? imageFunction;
   final String title;
   final String subtitle;
   final bool dark;
@@ -15,8 +18,11 @@ class CAppBar extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.leadingIcon,
+    this.leadingFunction,
     this.trailingIcon,
+    this.trailingFunction,
     this.trailingImage,
+    this.imageFunction,
     required this.dark,
   }) : super(key: key);
 
@@ -30,10 +36,13 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (leadingIcon != null)
-                Icon(
-                  leadingIcon,
-                  size: 24,
-                  color: dark ? LightColors.primary : LightColors.accentDark,
+                IconButton(
+                  onPressed: leadingFunction,
+                  icon: Icon(
+                    leadingIcon,
+                    size: 24,
+                    color: dark ? LightColors.primary : LightColors.accentDark,
+                  ),
                 ),
               if (leadingIcon != null)
                 SizedBox(
@@ -54,7 +63,7 @@ class CAppBar extends StatelessWidget {
                   Text(
                     subtitle,
                     style: TextStyle(
-                        fontSize: 14.0.sp,
+                        fontSize: 12.0.sp,
                         fontWeight: FontWeight.w600,
                         color: dark
                             ? LightColors.primaryLight
@@ -68,26 +77,32 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (trailingIcon != null)
-                Icon(
-                  trailingIcon,
-                  size: 24,
-                  color: dark ? LightColors.primary : LightColors.accentDark,
+                IconButton(
+                  onPressed: trailingFunction,
+                  icon: Icon(
+                    trailingIcon,
+                    size: 24,
+                    color: dark ? LightColors.primary : LightColors.accentDark,
+                  ),
                 ),
               if (trailingIcon != null && trailingImage != null)
                 SizedBox(
                   width: 6.0.wp,
                 ),
               if (trailingImage != null)
-                Container(
-                  decoration: const BoxDecoration(color: LightColors.primary),
-                  height: 11.5.wp,
-                  width: 11.5.wp,
-                  child: ClipRRect(
-                    child: Image.asset(
-                      trailingImage!,
-                      fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: imageFunction,
+                  child: Container(
+                    decoration: const BoxDecoration(color: LightColors.primary),
+                    height: 11.5.wp,
+                    width: 11.5.wp,
+                    child: ClipRRect(
+                      child: Image.asset(
+                        trailingImage!,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(14),
                     ),
-                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
             ],

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mychoices/app/core/utils/extensions.dart';
 import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/data/mock_data.dart';
 import 'package:mychoices/app/modules/timeline/controller.dart';
 import 'package:mychoices/app/modules/timeline/widgets/timeline_item.dart';
 import 'package:mychoices/app/widgets/cappbar.dart';
 import 'package:get/get.dart';
 import 'package:mychoices/app/widgets/cnavbar.dart';
+import 'package:date_utils/date_utils.dart' as date_util;
 
 class TimelinePage extends GetView<TimelineController> {
   const TimelinePage({Key? key}) : super(key: key);
@@ -18,11 +19,15 @@ class TimelinePage extends GetView<TimelineController> {
         child: Column(
           children: [
             // App Bar
-            const CAppBar(
+            CAppBar(
               title: 'Hello, David',
-              subtitle: '2Choices made Today',
+              subtitle: '${controller.choices.length} Choices on this day',
               trailingImage: 'assets/images/profile.jpg',
+              imageFunction: () {},
               trailingIcon: Icons.today,
+              trailingFunction: () {
+                controller.showToday();
+              },
               dark: false,
             ),
 
@@ -57,7 +62,7 @@ class TimelinePage extends GetView<TimelineController> {
           ],
         ),
       ),
-      bottomNavigationBar: CNavBar(),
+      bottomNavigationBar: const CNavBar(),
     );
   }
 }

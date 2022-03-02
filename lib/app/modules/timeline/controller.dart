@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
 import 'package:mychoices/app/data/mock_data.dart';
 import 'package:mychoices/app/data/models/choice.dart';
 import 'package:mychoices/app/data/services/storage/repository.dart';
@@ -101,5 +100,12 @@ class TimelineController extends GetxController {
       return true;
     }
     return false;
+  }
+
+  void showToday() {
+    selectedIndex.value = 0;
+    // Scroll to selected value
+    timelineScrollController.animateTo(0.0,
+        duration: const Duration(milliseconds: 1000), curve: Curves.ease);
   }
 }
