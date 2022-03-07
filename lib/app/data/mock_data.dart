@@ -8,10 +8,14 @@ final modelUser = User(
 );
 
 final modelChoice = Choice(
-  title: 'Date',
-  choice: 'Wednesday',
-  category: categoriesMap[categories.relationship]!,
-  date: DateTime(2022, 2, 26, 6, 30),
-  relevance: relevanceEnum.high,
-  random: false,
-);
+    title: 'Date',
+    choice: 'Wednesday',
+    category: categoriesMap[categories.relationship]!,
+    date: DateTime(2022, 2, 26, 6, 30),
+    relevance: relevanceEnum.high,
+    random: true,
+    tags: const [
+      Tag(name: 'hashtag'),
+      Tag(name: 'nisha'),
+      Tag(name: 'hello'),
+    ]);

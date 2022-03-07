@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mychoices/app/core/utils/extensions.dart';
+import 'package:mychoices/app/modules/add_choice/binding.dart';
+import 'package:mychoices/app/modules/add_choice/view.dart';
 import '../core/values/colors.dart';
 
 class CNavBar extends StatelessWidget {
@@ -46,7 +48,9 @@ class CNavBar extends StatelessWidget {
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => AddChoiceView(), binding: AddChoiceBinding());
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 3.0.wp),
                     child: Column(

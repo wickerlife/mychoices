@@ -45,11 +45,11 @@ class Category {
 }
 
 class Tag {
-  String? name;
+  final String name;
 
-  Tag(String name) {
-    this.name = name.toLowerCase();
-  }
+  const Tag({
+    required this.name,
+  });
 
   @override
   int get hashCode => Object.hash(name, name);

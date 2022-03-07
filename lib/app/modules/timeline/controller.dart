@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mychoices/app/core/values/colors.dart';
 import 'package:mychoices/app/data/mock_data.dart';
 import 'package:mychoices/app/data/models/choice.dart';
 import 'package:mychoices/app/data/services/storage/repository.dart';
@@ -23,12 +24,15 @@ class TimelineController extends GetxController {
   void onInit() {
     super.onInit();
     // Load Repository
-    choices.assignAll(choiceRepository.readChoices());
+    choices.assignAll(choiceRepository.readTodaysChoices());
+    choices.add(modelChoice);
     ever(choices, (_) => choiceRepository.writeChoices(choices));
     // Timeline Setup
     date_util.DateUtils.daysInRange(
       modelUser.firstDay,
-      DateTime.now(),
+      DateTime.now().add(
+        const Duration(hours: 12),
+      ),
     ).toSet().toList().forEach((element) {
       totalDays.add(element);
     });
@@ -107,5 +111,39 @@ class TimelineController extends GetxController {
     // Scroll to selected value
     timelineScrollController.animateTo(0.0,
         duration: const Duration(milliseconds: 1000), curve: Curves.ease);
+  }
+
+  bool isRandomChoice(int index) {
+    final choice = choices[index];
+    return choice.random;
+  }
+
+  String getFormattedChoiceTime(int index) {
+    final choice = choices[index];
+    return DateFormat('Hm').format(choice.date);
+  }
+
+  IconData getChoiceCategoryIcon(int index) {
+    final Choice choice = choices[index];
+    return choice.category.icon;
+  }
+
+  Color getChoiceRelevanceColor(int index) {
+    final choice = choices[index];
+    if (choice.relevance == relevanceEnum.high) {
+      return LightColors.red;
+    } else if (choice.relevance == relevanceEnum.medium) {
+      return LightColors.yellow;
+    }
+    return LightColors.blue;
+  }
+
+  List<dynamic> getChoiceTags(int index) {
+    final choice = choices[index];
+    if (choice.tags == null) {
+      return [];
+    }
+    List<Tag> tags = choice.tags!.map((tag) => Tag(name: tag.name)).toList();
+    return tags;
   }
 }

@@ -7,6 +7,8 @@ class ChoiceRepository {
 
   List<Choice> readChoices() => choiceProvider.readChoices();
 
+  List<Choice> readTodaysChoices() => choiceProvider.readTodaysChoices();
+
   void writeChoices(List<Choice> choices) =>
       choiceProvider.writeChoices(choices);
 }
