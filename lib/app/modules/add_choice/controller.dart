@@ -36,6 +36,8 @@ class AddChoiceController extends GetxController {
   final descriptionController = TextEditingController();
 
   // Made / To Make Decision Switch
+  final choseMode = false.obs;
+  final isRandom = false.obs;
 
   // Choice Made Input
 

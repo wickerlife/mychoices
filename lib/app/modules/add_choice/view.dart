@@ -9,6 +9,7 @@ import 'package:mychoices/app/modules/add_choice/widgets/card.dart';
 import 'package:mychoices/app/modules/add_choice/widgets/choose_category_alert.dart';
 import 'package:mychoices/app/modules/add_choice/widgets/choose_tags_alert.dart';
 import 'package:mychoices/app/modules/add_choice/widgets/input_field.dart';
+import 'package:mychoices/app/modules/add_choice/widgets/mode_button.dart';
 import 'package:mychoices/app/modules/add_choice/widgets/relevance_chip.dart';
 import 'package:mychoices/app/widgets/cappbar.dart';
 import 'package:mychoices/app/widgets/tag_item.dart';
@@ -221,7 +222,7 @@ class AddChoiceView extends GetView<AddChoiceController> {
                           fillColor: LightColors.accentDark,
                           hintColor: LightColors.primaryDark,
                           textColor: LightColors.primary,
-                          hintText: 'Input a tag',
+                          hintText: 'Describe your choice',
                           showCancelBtn: true,
                           onChange: controller.onTagInputChange,
                           maxLength: 300,
@@ -230,6 +231,29 @@ class AddChoiceView extends GetView<AddChoiceController> {
                       ),
                       SizedBox(
                         height: 6.0.wp,
+                      ),
+                      Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ModeButton(
+                              title: 'Made Choice',
+                              selected: (!controller.isRandom.value && controller.choseMode.value),
+                              onTap: () {
+                                controller.isRandom.value = false;
+                                controller.choseMode.value = true;
+                              },
+                            ),
+                            ModeButton(
+                              title: 'Help me decide',
+                              selected: (controller.isRandom.value && controller.choseMode.value),
+                              onTap: () {
+                                controller.isRandom.value = true;
+                                controller.choseMode.value = true;
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
