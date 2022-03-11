@@ -3,7 +3,7 @@ import 'package:mychoices/app/core/utils/extensions.dart';
 import 'package:mychoices/app/core/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:mychoices/app/modules/timeline/controller.dart';
-import 'package:mychoices/app/modules/timeline/widgets/tag_item.dart';
+import 'package:mychoices/app/widgets/tag_item.dart';
 
 class ChoiceItem extends StatelessWidget {
   final controller = Get.find<TimelineController>();

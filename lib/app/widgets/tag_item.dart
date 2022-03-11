@@ -4,7 +4,16 @@ import 'package:mychoices/app/core/values/colors.dart';
 
 class TagItem extends StatelessWidget {
   final String name;
-  const TagItem({Key? key, required this.name}) : super(key: key);
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? fontSize;
+  const TagItem({
+    Key? key,
+    required this.name,
+    this.backgroundColor,
+    this.textColor,
+    this.fontSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,7 @@ class TagItem extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: LightColors.accentLight,
+          color: backgroundColor ?? LightColors.accentLight,
           borderRadius: BorderRadius.circular(7),
         ),
         child: Padding(
@@ -22,9 +31,9 @@ class TagItem extends StatelessWidget {
           child: Text(
             "#$name",
             style: TextStyle(
-              color: LightColors.primaryLight,
+              color: textColor ?? LightColors.primaryLight,
               fontFamily: 'Raleway',
-              fontSize: 11.0.sp,
+              fontSize: fontSize ?? 11.0.sp,
               fontWeight: FontWeight.w600,
             ),
           ),

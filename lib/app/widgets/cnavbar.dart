@@ -49,7 +49,7 @@ class CNavBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                   onTap: () {
-                    Get.to(() => AddChoiceView(), binding: AddChoiceBinding());
+                    Get.to(() => const AddChoiceView(), binding: AddChoiceBinding());
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 3.0.wp),

@@ -8,6 +8,7 @@ class StorageService extends GetxService {
     _box = GetStorage();
 
     await _box.writeIfNull(choiceKey, []);
+    await _box.writeIfNull(tagKey, []);
     return this;
   }
 

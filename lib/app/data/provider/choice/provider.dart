@@ -9,23 +9,23 @@ class ChoiceProvider {
 
   List<Choice> readChoices() {
     var choices = <Choice>[];
-    jsonDecode(_storage.read(choiceKey).toString())
-        .forEach((e) => choices.add(Choice.fromJson(e)));
+    jsonDecode(_storage.read(choiceKey).toString()).forEach((e) => choices.add(Choice.fromJson(e)));
     return choices;
   }
 
   List<Choice> readTodaysChoices() {
-    var choices = readChoices();
     var todayChoices = <Choice>[];
     var today = DateTime.now();
     var year = today.year;
     var month = today.month;
     var day = today.day;
-    choices.forEach((e) {
-      if (e.date.month == month && e.date.year == year && e.date.day == day) {
-        todayChoices.add(e);
-      }
-    });
+    readChoices().forEach(
+      (e) {
+        if (e.date.month == month && e.date.year == year && e.date.day == day) {
+          todayChoices.add(e);
+        }
+      },
+    );
     return todayChoices;
   }
 

@@ -2,33 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
-enum categories {
-  relationship,
-  personal,
-  family,
-  friends,
-  life,
-  hobbies,
-  goals,
-  education,
-  finances,
-  work,
-  others
-}
+enum categories { relationship, personal, family, friends, life, hobbies, goals, education, finances, work, others }
 
-enum relevanceEnum { low, medium, high }
+enum relevanceEnum { none, low, medium, high }
 
 var categoriesMap = {
-  categories.relationship:
-      const Category(name: 'Relationship', icon: Icons.people),
-  categories.personal: const Category(
-      name: 'Relationship', icon: Icons.sentiment_very_satisfied),
-  categories.family:
-      const Category(name: 'Family', icon: Icons.family_restroom),
-  categories.friends:
-      const Category(name: 'Friends', icon: Icons.sports_kabaddi),
-  categories.life: const Category(
-      name: 'Life & Entertainment', icon: Icons.sports_basketball),
+  categories.personal: const Category(name: 'Personal', icon: Icons.sentiment_very_satisfied),
+  categories.relationship: const Category(name: 'Relationship', icon: Icons.people),
+  categories.family: const Category(name: 'Family', icon: Icons.family_restroom),
+  categories.friends: const Category(name: 'Friends', icon: Icons.sports_kabaddi),
+  categories.life: const Category(name: 'Life & Entertainment', icon: Icons.sports_basketball),
   categories.hobbies: const Category(name: 'Hobbies', icon: Icons.brush),
   categories.goals: const Category(name: 'Goals', icon: Icons.emoji_events),
   categories.education: const Category(name: 'Education', icon: Icons.school),
@@ -42,6 +25,14 @@ class Category {
   final IconData icon;
 
   const Category({required this.name, required this.icon});
+
+  @override
+  int get hashCode => Object.hash(name, icon);
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is Category && other.name == name;
+  }
 }
 
 class Tag {
@@ -114,8 +105,7 @@ class Choice extends Equatable {
         category: json['category'],
         tags: json['tags'],
         date: DateTime.parse(json['date']),
-        relevance:
-            EnumToString.fromString(relevanceEnum.values, json['relevance'])!,
+        relevance: EnumToString.fromString(relevanceEnum.values, json['relevance'])!,
         random: json['random'],
       );
 
