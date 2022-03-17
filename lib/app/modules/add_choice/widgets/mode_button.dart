@@ -6,11 +6,16 @@ class ModeButton extends StatelessWidget {
   final String title;
   final bool selected;
   final VoidCallback onTap;
+  final double? width;
+  final double? height;
+
   const ModeButton({
     Key? key,
     required this.title,
     required this.selected,
     required this.onTap,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -30,8 +35,8 @@ class ModeButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: Ink(
-          width: 41.5.wp,
-          height: 16.3.wp,
+          width: width ?? 41.5.wp,
+          height: height ?? 16.3.wp,
           decoration: BoxDecoration(
             color: (selected) ? LightColors.primary : LightColors.accentLight,
             borderRadius: BorderRadius.circular(10),

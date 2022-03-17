@@ -33,13 +33,8 @@ class TimelineItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
             child: InkWell(
-              splashFactory:
-                  controller.totalDays[index].isBefore(controller.firstDay)
-                      ? NoSplash.splashFactory
-                      : null,
-              splashColor: controller.isCurrentDay(index)
-                  ? LightColors.accentLight
-                  : LightColors.primaryLight,
+              splashFactory: controller.totalDays[index].isBefore(controller.firstDay) ? NoSplash.splashFactory : null,
+              splashColor: controller.isCurrentDay(index) ? LightColors.accentLight : LightColors.primaryLight,
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
@@ -48,7 +43,6 @@ class TimelineItem extends StatelessWidget {
                   return;
                 } else {
                   controller.selectedIndex.value = index;
-                  controller.selectedIndex.refresh();
                 }
               },
               child: Padding(

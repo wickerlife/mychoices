@@ -14,6 +14,10 @@ class InputField extends StatelessWidget {
   final bool showCancelBtn;
   final int? maxLength;
   final int? maxLines;
+  final bool? readOnly;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final Function(String)? inputAction;
   const InputField({
     Key? key,
     required this.controller,
@@ -27,6 +31,10 @@ class InputField extends StatelessWidget {
     this.hintText,
     this.onChange,
     this.maxLines,
+    this.readOnly,
+    this.textInputAction,
+    this.focusNode,
+    this.inputAction,
   }) : super(key: key);
 
   @override
@@ -35,6 +43,13 @@ class InputField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
+        onFieldSubmitted: (value) {
+          if (inputAction != null) {
+            inputAction!(value);
+          }
+        },
+        onEditingComplete: () => FocusScope.of(context).nextFocus(),
+        textInputAction: textInputAction,
         expands: (maxLength != null) ? false : true,
         maxLength: maxLength,
         onChanged: (value) {
@@ -44,6 +59,9 @@ class InputField extends StatelessWidget {
         },
         textAlignVertical: TextAlignVertical.center,
         controller: controller,
+        readOnly: readOnly ?? false,
+        enabled: (readOnly == true) ? false : true,
+        focusNode: focusNode,
         decoration: InputDecoration(
           counterText: '',
           isDense: true,

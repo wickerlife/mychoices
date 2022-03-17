@@ -21,18 +21,19 @@ class TimelinePage extends GetView<TimelineController> {
           child: Column(
             children: [
               // App Bar
-              CAppBar(
-                title: 'Hello, David',
-                subtitle: '${controller.choices.length} Choices on this day',
-                trailingImage: 'assets/images/profile.jpg',
-                imageFunction: () {},
-                trailingIcon: Icons.today,
-                trailingFunction: () {
-                  controller.showToday();
-                },
-                dark: false,
+              Obx(
+                () => CAppBar(
+                  name: 'Hello, David',
+                  subtitle: '${controller.allChoices.where((choice) => choice.compareDate(controller.getSelectedDay())).length} Choices on this day',
+                  trailingImage: 'assets/images/profile.jpg',
+                  imageFunction: () {},
+                  trailingIcon: Icons.today,
+                  trailingFunction: () {
+                    controller.showToday();
+                  },
+                  dark: false,
+                ),
               ),
-
               // Timeline
               Padding(
                 padding: EdgeInsets.only(top: 2.0.wp),
@@ -41,18 +42,19 @@ class TimelinePage extends GetView<TimelineController> {
                   width: Get.width,
                   child: Obx(
                     () => ListView.builder(
+                      physics: const ClampingScrollPhysics(),
                       reverse: true,
                       scrollDirection: Axis.horizontal,
-                      physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
                       controller: controller.timelineScrollController,
                       itemBuilder: (BuildContext context, int index) {
-                        if (index > controller.totalDays.length - 1) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: LightColors.primaryLight,
-                            ),
-                          );
+                        if ((index > controller.totalDays.length - 1)) {
+                          return Container();
+                          //   return const Center(
+                          //   child: CircularProgressIndicator(
+                          //     color: LightColors.primaryLight,
+                          //   ),
+                          // );
                         }
                         return TimelineItem(index: index);
                       },
@@ -63,20 +65,46 @@ class TimelinePage extends GetView<TimelineController> {
               ),
 
               // Choices ListView
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 4.0.hp,
-                  left: 6.0.wp,
-                  right: 6.0.wp,
-                ),
-                child: Obx(
-                  () => ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ChoiceItem(index: index);
-                    },
-                    itemCount: controller.choices.length,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 2.0.hp,
+                  ),
+                  child: Obx(
+                    () => Container(
+                      child: (controller.allChoices
+                              .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
+                              .toList()
+                              .isEmpty)
+                          ? Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 8.0.hp,
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'No choices recorded on this day',
+                                  style: TextStyle(
+                                    color: LightColors.primaryDark,
+                                    fontFamily: 'Raleway',
+                                  ),
+                                ),
+                              ),
+                            )
+                          : ListView(
+                              children: [
+                                ...controller.allChoices
+                                    .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
+                                    .toList()
+                                    .map((choice) => ChoiceItem(
+                                          choice: choice,
+                                        ))
+                                    .toList(),
+                                SizedBox(
+                                  height: 3.0.hp,
+                                )
+                              ],
+                            ),
+                    ),
                   ),
                 ),
               ),
@@ -84,7 +112,7 @@ class TimelinePage extends GetView<TimelineController> {
           ),
         ),
       ),
-      bottomNavigationBar: const CNavBar(),
+      bottomNavigationBar: CNavBar(),
     );
   }
 }

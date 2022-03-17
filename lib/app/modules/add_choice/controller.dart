@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:date_format/date_format.dart';
 import 'package:mychoices/app/core/values/colors.dart';
 import 'package:mychoices/app/data/models/choice.dart';
 import 'package:mychoices/app/data/services/storage/repository.dart';
+import 'package:mychoices/app/modules/choice_overview/binding.dart';
+import 'package:mychoices/app/modules/choice_overview/view.dart';
 
 class AddChoiceController extends GetxController {
   ChoiceRepository choiceRepository;
@@ -12,8 +16,14 @@ class AddChoiceController extends GetxController {
     required this.tagRepository,
   });
 
+  final editing = false.obs;
+  final didEdit = false.obs;
+  final initialDate = DateTime.parse(Get.arguments['date']);
+  // Save Button
+  final saveButton = false.obs;
+
   // Name & Category
-  final newChoiceFormKey = GlobalKey<FormState>();
+
   final TextEditingController nameController = TextEditingController();
   // Category Popup
   final chosenCategory = categoriesMap.values.toList()[0].obs;
@@ -40,26 +50,92 @@ class AddChoiceController extends GetxController {
   final isRandom = false.obs;
 
   // Choice Made Input
+  final decisionController = TextEditingController();
+
+  // Date picker for made choice
+  final selectedDate = DateTime.now().obs;
+  final dateController = DateFormat.yMd().format(DateTime.now()).obs;
+  final selectedTime = TimeOfDay.fromDateTime(DateTime.now()).obs;
+  final timeController = formatDate(DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute), [hh, ':', nn, " ", am]).toString().obs;
 
   // Add other options toggle
+  final addConsideredChoices = false.obs;
 
   // Other/Possible Options
+  final optionsControllers = <TextEditingController>[].obs;
+  final optionsControllerFocus = <FocusNode>[];
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     tags.assignAll(tagRepository.readTags());
     tempTags.assignAll(tagRepository.readTags());
     ever(tags, (_) => tagRepository.writeTags(tags));
+    // Set Iniital Date
+    selectedDate.value = initialDate;
+    dateController.value = dateFormat(selectedDate.value);
+    // Detect Incoming Arguments
+    if (Get.arguments['choice'] != null) {
+      final choice = Choice.fromJson(Get.arguments['choice']);
+      choseMode.value = true;
+      editing.value = true;
+      saveButton.value = true;
+      nameController.text = choice.title;
+      selectedRelevance.value = choice.relevance;
+      descriptionController.text = choice.description ?? '';
+      isRandom.value = choice.random;
+      if (choice.tags != null) {
+        selectedTags.assignAll(List<Tag>.from(choice.tags!));
+      }
+
+      selectedDate.value = choice.date;
+      dateController.value = dateFormat(selectedDate.value);
+      selectedTime.value = TimeOfDay(
+        hour: choice.date.hour,
+        minute: choice.date.minute,
+      );
+      timeController.value = formatDate(DateTime(2019, 08, 1, selectedTime.value.hour, selectedTime.value.minute), [hh, ':', nn, " ", am]).toString();
+
+      if (choice.options != null) {
+        final options = choice.options;
+        options!.remove(choice.choice.value);
+
+        addConsideredChoices.value = true;
+        optionsControllers.assignAll(
+          options
+              .map(
+                (e) => TextEditingController.fromValue(TextEditingValue(text: e)),
+              )
+              .toList(),
+        );
+
+        optionsControllerFocus.assignAll(
+          options
+              .map(
+                (_) => FocusNode(),
+              )
+              .toList(),
+        );
+      }
+      decisionController.text = choice.choice.value;
+      decisionController.addListener(
+        () {
+          didEdit.value = false;
+        },
+      );
+    }
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
     nameController.dispose();
     tagsInput.dispose();
+    descriptionController.dispose();
+    decisionController.dispose();
+    for (var controller in optionsControllers) {
+      controller.dispose();
+    }
   }
 
   bool isChosenCategory(Category category) {
@@ -146,7 +222,90 @@ class AddChoiceController extends GetxController {
     return color.withOpacity(0.4);
   }
 
-  void clearRelevance() {
-    selectedRelevance.value = relevanceEnum.none;
+  void saveBtnEnabled() {
+    bool emptyOptions() {
+      var filled = 0;
+      for (var controller in optionsControllers) {
+        if (controller.value.text != '') {
+          filled += 1;
+        }
+      }
+      if (isRandom.value) {
+        return filled < 2;
+      }
+      return filled < 1;
+    }
+
+    var enabled = true;
+    if (nameController.value.text == '' || !choseMode.value) {
+      enabled = false;
+    }
+
+    if (!isRandom.value) {
+      if (decisionController.value.text == '') enabled = false;
+      if (addConsideredChoices.value && emptyOptions()) enabled = false;
+    }
+
+    if (emptyOptions() && isRandom.value) {
+      enabled = false;
+    }
+    saveButton.value = enabled;
+  }
+
+  void save() async {
+    final options = optionsControllers.where((element) => element.value.text != '').map((e) => e.value.text).toList();
+    if ((!isRandom.value || editing.value) && options.length > 1) {
+      options.insert(0, decisionController.text);
+    }
+
+    var choice = Choice(
+      title: nameController.value.text,
+      category: chosenCategory.value,
+      choice: ChoiceValue(
+        value: (!isRandom.value || editing.value) ? decisionController.value.text : '',
+        toInitialize: (isRandom.value && !editing.value),
+        changed: false,
+      ),
+      relevance: selectedRelevance.value,
+      tags: selectedTags.toList(),
+      random: isRandom.value,
+      date: isRandom.value
+          ? DateTime(selectedDate.value.year, selectedDate.value.month, selectedDate.value.day, selectedTime.value.hour, selectedTime.value.minute)
+          : DateTime(
+              selectedDate.value.year,
+              selectedDate.value.month,
+              selectedDate.value.day,
+              selectedTime.value.hour,
+              selectedTime.value.minute,
+            ),
+      description: (descriptionController.value.text == '') ? null : descriptionController.value.text,
+      options: options,
+    );
+
+    if (isRandom.value) {
+      var choicePackage = await Get.to(
+        () => const ChoiceOverviewView(),
+        binding: ChoiceOverviewBinding(),
+        arguments: {
+          'choice': choice.toJson(),
+        },
+      );
+      if (choicePackage is ChoicePackage && choicePackage.success) {
+        Get.back(result: choicePackage);
+      }
+    } else {
+      Get.back(result: ChoicePackage(success: true, choice: choice));
+    }
+  }
+
+  String dateFormat(DateTime date) {
+    return DateFormat.yMd().format(date);
+  }
+
+  bool compareDate(DateTime first, DateTime second) {
+    if (first.year == second.year && first.month == second.month && first.day == second.day) {
+      return true;
+    }
+    return false;
   }
 }

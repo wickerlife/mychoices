@@ -10,12 +10,13 @@ import 'package:intl/intl.dart';
 class TimelineController extends GetxController {
   ChoiceRepository choiceRepository;
   TimelineController({required this.choiceRepository});
-  final choices = <Choice>[].obs;
+  final allChoices = <Choice>[].obs;
 
   // Day Timeline Controller
+  final firstLoadComplete = false.obs;
   final firstDay = modelUser.firstDay;
-  final today = DateTime.now();
-  late ScrollController timelineScrollController;
+  final today = DateTime.now().obs;
+  late ScrollController timelineScrollController = ScrollController();
   final totalDays = <DateTime>[].obs;
   final selectedIndex = 0.obs;
 
@@ -24,40 +25,32 @@ class TimelineController extends GetxController {
   void onInit() {
     super.onInit();
     // Load Repository
-    choices.assignAll(choiceRepository.readTodaysChoices());
-    choices.add(modelChoice);
-    ever(choices, (_) => choiceRepository.writeChoices(choices));
+    allChoices.assignAll(choiceRepository.readChoices());
+    ever(allChoices, (_) => choiceRepository.writeChoices(allChoices));
     // Timeline Setup
-    date_util.DateUtils.daysInRange(
-      modelUser.firstDay,
-      DateTime.now().add(
-        const Duration(hours: 12),
-      ),
-    ).toSet().toList().forEach((element) {
-      totalDays.add(element);
-    });
-    if (totalDays.isEmpty) {
-      totalDays.add(DateTime.now());
-    }
-    // Reverse List
-    for (var i = 0; i < totalDays.length / 2; i++) {
-      var temp = totalDays[i];
-      totalDays[i] = totalDays[totalDays.length - 1 - i];
-      totalDays[totalDays.length - 1 - i] = temp;
-    }
-    timelineScrollController = ScrollController();
+    setTimeline(today.value);
+    firstLoadComplete.value = true;
     timelineScrollController.addListener(() {
-      if (timelineScrollController.position.pixels ==
-          timelineScrollController.position.maxScrollExtent) {
+      if (timelineScrollController.position.pixels == timelineScrollController.position.maxScrollExtent) {
         fetchDates();
       }
     });
+    var current = today.value;
+    Stream timer = Stream.periodic(const Duration(seconds: 1), (i) {
+      current = current.add(const Duration(seconds: 1));
+      return current;
+    });
+    timer.listen((current) => setTimeline(current));
   }
 
   @override
   void onClose() {
     timelineScrollController.dispose();
     super.onClose();
+  }
+
+  DateTime getSelectedDay() {
+    return totalDays[selectedIndex.value];
   }
 
   String getWeekDay(int index) {
@@ -71,15 +64,12 @@ class TimelineController extends GetxController {
   }
 
   void fetchDates() {
-    totalDays
-        .add(totalDays[totalDays.length - 1].subtract(const Duration(days: 1)));
+    totalDays.add(totalDays[totalDays.length - 1].subtract(const Duration(days: 1)));
   }
 
   bool isCurrentDay(int index) {
     DateTime select = totalDays[index];
-    if (today.year == select.year &&
-        today.month == select.month &&
-        today.day == select.day) {
+    if (today.value.year == select.year && today.value.month == select.month && today.value.day == select.day) {
       return true;
     }
     return false;
@@ -109,41 +99,64 @@ class TimelineController extends GetxController {
   void showToday() {
     selectedIndex.value = 0;
     // Scroll to selected value
-    timelineScrollController.animateTo(0.0,
-        duration: const Duration(milliseconds: 1000), curve: Curves.ease);
+    timelineScrollController.animateTo(0.0, duration: const Duration(milliseconds: 1000), curve: Curves.ease);
   }
 
   bool isRandomChoice(int index) {
-    final choice = choices[index];
+    final choice = allChoices[index];
     return choice.random;
   }
 
-  String getFormattedChoiceTime(int index) {
-    final choice = choices[index];
+  String getFormattedChoiceTime(Choice choice) {
     return DateFormat('Hm').format(choice.date);
   }
 
-  IconData getChoiceCategoryIcon(int index) {
-    final Choice choice = choices[index];
-    return choice.category.icon;
-  }
-
-  Color getChoiceRelevanceColor(int index) {
-    final choice = choices[index];
+  Color getChoiceRelevanceColor(Choice choice) {
     if (choice.relevance == relevanceEnum.high) {
       return LightColors.red;
     } else if (choice.relevance == relevanceEnum.medium) {
       return LightColors.yellow;
+    } else if (choice.relevance == relevanceEnum.low) {
+      return LightColors.blue;
     }
-    return LightColors.blue;
+    return Colors.transparent;
   }
 
-  List<dynamic> getChoiceTags(int index) {
-    final choice = choices[index];
+  List<dynamic> getChoiceTags(Choice choice) {
     if (choice.tags == null) {
       return [];
     }
     List<Tag> tags = choice.tags!.map((tag) => Tag(name: tag.name)).toList();
     return tags;
+  }
+
+  void addChoice(Choice choice) {
+    allChoices.add(choice);
+    allChoices.sort((a, b) => b.date.compareTo(a.date));
+  }
+
+  void setTimeline(DateTime current) {
+    if (!firstLoadComplete.value || current.day != today.value.day) {
+      date_util.DateUtils.daysInRange(
+        modelUser.firstDay,
+        DateTime.now().add(
+          const Duration(hours: 12),
+        ),
+      ).toSet().toList().forEach(
+        (element) {
+          if (element.day <= DateTime.now().day) totalDays.add(element);
+        },
+      );
+      if (totalDays.isEmpty) {
+        totalDays.add(DateTime.now());
+      }
+      // Reverse List
+      for (var i = 0; i < totalDays.length / 2; i++) {
+        var temp = totalDays[i];
+        totalDays[i] = totalDays[totalDays.length - 1 - i];
+        totalDays[totalDays.length - 1 - i] = temp;
+      }
+      today.value = DateTime.now();
+    }
   }
 }

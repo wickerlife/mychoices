@@ -9,13 +9,13 @@ class CAppBar extends StatelessWidget {
   final VoidCallback? trailingFunction;
   final String? trailingImage;
   final VoidCallback? imageFunction;
-  final String title;
+  final String name;
   final String subtitle;
   final bool dark;
 
-  const CAppBar({
+  CAppBar({
     Key? key,
-    required this.title,
+    required this.name,
     required this.subtitle,
     this.leadingIcon,
     this.leadingFunction,
@@ -36,12 +36,21 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (leadingIcon != null)
-                IconButton(
-                  onPressed: leadingFunction,
-                  icon: Icon(
-                    leadingIcon,
-                    size: 24,
-                    color: dark ? LightColors.primary : LightColors.accentDark,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.zero,
+                        child: Icon(
+                          leadingIcon,
+                          size: 24,
+                          color: dark ? LightColors.primary : LightColors.accentDark,
+                        ),
+                      ),
+                      onTap: leadingFunction,
+                    ),
                   ),
                 ),
               if (leadingIcon != null)
@@ -52,12 +61,11 @@ class CAppBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    name,
                     style: TextStyle(
                         fontSize: 22.0.sp,
                         fontWeight: FontWeight.bold,
-                        color:
-                            dark ? LightColors.primary : LightColors.accentDark,
+                        color: dark ? LightColors.primary : LightColors.accentDark,
                         fontFamily: 'Raleway'),
                   ),
                   Text(
@@ -65,9 +73,7 @@ class CAppBar extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 12.0.sp,
                         fontWeight: FontWeight.w600,
-                        color: dark
-                            ? LightColors.primaryLight
-                            : LightColors.primaryDark,
+                        color: dark ? LightColors.primaryLight : LightColors.primaryDark,
                         fontFamily: 'Raleway'),
                   ),
                 ],
@@ -77,12 +83,21 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (trailingIcon != null)
-                IconButton(
-                  onPressed: trailingFunction,
-                  icon: Icon(
-                    trailingIcon,
-                    size: 24,
-                    color: dark ? LightColors.primary : LightColors.accentDark,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.zero,
+                        child: Icon(
+                          trailingIcon,
+                          size: 24,
+                          color: dark ? LightColors.primary : LightColors.accentDark,
+                        ),
+                      ),
+                      onTap: trailingFunction,
+                    ),
                   ),
                 ),
               if (trailingIcon != null && trailingImage != null)

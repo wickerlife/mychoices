@@ -2,34 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:mychoices/app/core/utils/extensions.dart';
 import 'package:mychoices/app/core/values/colors.dart';
 import 'package:get/get.dart';
+import 'package:mychoices/app/data/models/choice.dart';
+import 'package:mychoices/app/modules/choice/binding.dart';
+import 'package:mychoices/app/modules/choice/view.dart';
 import 'package:mychoices/app/modules/timeline/controller.dart';
 import 'package:mychoices/app/widgets/tag_item.dart';
 
 class ChoiceItem extends StatelessWidget {
   final controller = Get.find<TimelineController>();
-  final int index;
+  final Choice choice;
 
   ChoiceItem({
     Key? key,
-    required this.index,
+    required this.choice,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 4.0.wp),
+      padding: EdgeInsets.only(top: 2.0.hp),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            controller.getFormattedChoiceTime(index),
+            controller.getFormattedChoiceTime(choice),
             style: TextStyle(
               color: LightColors.primaryDark,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
               fontSize: 12.0.sp,
             ),
+          ),
+          SizedBox(
+            width: 8.2.wp,
           ),
           Container(
             decoration: BoxDecoration(
@@ -58,7 +63,11 @@ class ChoiceItem extends StatelessWidget {
                       customBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => const ChoiceView(), binding: ChoiceBinding(), arguments: {
+                          'choice': choice.toJson(),
+                        });
+                      },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 4.0.wp,
@@ -74,7 +83,7 @@ class ChoiceItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      'Date',
+                                      choice.title,
                                       style: TextStyle(
                                         color: LightColors.primary,
                                         fontFamily: 'Raleway',
@@ -82,11 +91,11 @@ class ChoiceItem extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    if (controller.isRandomChoice(index))
+                                    if (choice.random)
                                       SizedBox(
                                         width: 2.4.wp,
                                       ),
-                                    if (controller.isRandomChoice(index))
+                                    if (choice.random)
                                       const Icon(
                                         Icons.auto_awesome,
                                         color: LightColors.primary,
@@ -99,8 +108,8 @@ class ChoiceItem extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       ...controller
-                                          .getChoiceTags(index)
-                                          .sublist(0, 2)
+                                          .getChoiceTags(choice)
+                                          .sublist(0, (controller.getChoiceTags(choice).length > 2) ? 2 : controller.getChoiceTags(choice).length)
                                           .map<Widget>(
                                             (tag) => TagItem(
                                               name: tag.name,
@@ -115,7 +124,7 @@ class ChoiceItem extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(right: 6.0.wp),
                               child: Icon(
-                                controller.getChoiceCategoryIcon(index),
+                                choice.category.icon,
                                 color: LightColors.primary,
                                 size: 24,
                               ),
@@ -130,7 +139,7 @@ class ChoiceItem extends StatelessWidget {
                   height: 25.4.wp,
                   width: 3.5.wp,
                   decoration: BoxDecoration(
-                    color: controller.getChoiceRelevanceColor(index),
+                    color: controller.getChoiceRelevanceColor(choice),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(14),
                       bottomRight: Radius.circular(14),

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:mychoices/app/core/utils/extensions.dart';
+import 'package:mychoices/app/data/models/choice.dart';
 import 'package:mychoices/app/modules/add_choice/binding.dart';
 import 'package:mychoices/app/modules/add_choice/view.dart';
+import 'package:mychoices/app/modules/timeline/controller.dart';
 import '../core/values/colors.dart';
 
 class CNavBar extends StatelessWidget {
-  const CNavBar({Key? key}) : super(key: key);
+  final controller = Get.find<TimelineController>();
+  CNavBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class CNavBar extends StatelessWidget {
         children: [
           const Icon(
             Icons.view_day,
-            size: 34,
+            size: 24,
           ),
           Container(
             decoration: BoxDecoration(boxShadow: [
@@ -48,8 +52,31 @@ class CNavBar extends StatelessWidget {
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  onTap: () {
-                    Get.to(() => const AddChoiceView(), binding: AddChoiceBinding());
+                  onTap: () async {
+                    dynamic choicePackage = await Get.to(
+                      () => const AddChoiceView(),
+                      binding: AddChoiceBinding(),
+                      arguments: {
+                        'date': controller.getSelectedDay().toIso8601String(),
+                      },
+                    );
+                    if (choicePackage is ChoicePackage && choicePackage.success) {
+                      controller.addChoice(choicePackage.choice!);
+
+                      EasyLoading.showSuccess(
+                        'New Choice Recorded!',
+                        maskType: EasyLoadingMaskType.black,
+                        dismissOnTap: true,
+                        duration: const Duration(seconds: 1),
+                      );
+                    } else {
+                      EasyLoading.showError(
+                        'Choice was not recorded',
+                        maskType: EasyLoadingMaskType.black,
+                        dismissOnTap: true,
+                        duration: const Duration(seconds: 1),
+                      );
+                    }
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 3.0.wp),
@@ -71,7 +98,7 @@ class CNavBar extends StatelessWidget {
           ),
           const Icon(
             Icons.settings,
-            size: 34,
+            size: 24,
           )
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

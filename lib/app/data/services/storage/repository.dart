@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mychoices/app/data/models/choice.dart';
 import 'package:mychoices/app/data/provider/choice/provider.dart';
 import 'package:mychoices/app/data/provider/tag/provider.dart';
@@ -9,9 +8,11 @@ class ChoiceRepository {
 
   List<Choice> readChoices() => choiceProvider.readChoices();
 
-  List<Choice> readTodaysChoices() => choiceProvider.readTodaysChoices();
+  List<Choice> readDayChoices(DateTime date) => choiceProvider.readDayChoices(date);
 
   void writeChoices(List<Choice> choices) => choiceProvider.writeChoices(choices);
+
+  void writeChoicesToDay(List<Choice> newChoices, DateTime date) => choiceProvider.writeChoicesToDay(newChoices, date);
 }
 
 class TagRepository {
