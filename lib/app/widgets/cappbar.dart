@@ -36,22 +36,13 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (leadingIcon != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.zero,
-                        child: Icon(
-                          leadingIcon,
-                          size: 24,
-                          color: dark ? LightColors.primary : LightColors.accentDark,
-                        ),
-                      ),
-                      onTap: leadingFunction,
-                    ),
+                IconButton(
+                  icon: Icon(
+                    leadingIcon,
+                    size: 24,
+                    color: dark ? LightColors.primary : LightColors.accentDark,
                   ),
+                  onPressed: leadingFunction,
                 ),
               if (leadingIcon != null)
                 SizedBox(
@@ -83,22 +74,13 @@ class CAppBar extends StatelessWidget {
           Row(
             children: [
               if (trailingIcon != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.zero,
-                        child: Icon(
-                          trailingIcon,
-                          size: 24,
-                          color: dark ? LightColors.primary : LightColors.accentDark,
-                        ),
-                      ),
-                      onTap: trailingFunction,
-                    ),
+                IconButton(
+                  icon: Icon(
+                    trailingIcon,
+                    size: 24,
+                    color: dark ? LightColors.primary : LightColors.accentDark,
                   ),
+                  onPressed: trailingFunction,
                 ),
               if (trailingIcon != null && trailingImage != null)
                 SizedBox(
