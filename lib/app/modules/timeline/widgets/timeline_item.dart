@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/modules/timeline/controller.dart';
+import 'package:maichoices/app/modules/timeline/controller.dart';
 
 class TimelineItem extends StatelessWidget {
   final controller = Get.find<TimelineController>();

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/utils/keys.dart';
-import 'package:mychoices/app/data/services/storage/service.dart';
-import 'package:mychoices/app/data/models/choice.dart';
+import 'package:maichoices/app/core/utils/keys.dart';
+import 'package:maichoices/app/data/services/storage/service.dart';
+import 'package:maichoices/app/data/models/choice.dart';
 
 class ChoiceProvider {
   final StorageService _storage = Get.find<StorageService>();

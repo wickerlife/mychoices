@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/data/services/storage/repository.dart';
-import 'package:mychoices/app/modules/choice_overview/binding.dart';
-import 'package:mychoices/app/modules/choice_overview/view.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/services/storage/repository.dart';
+import 'package:maichoices/app/modules/choice_overview/binding.dart';
+import 'package:maichoices/app/modules/choice_overview/view.dart';
 
 class AddChoiceController extends GetxController {
   ChoiceRepository choiceRepository;
@@ -74,6 +74,8 @@ class AddChoiceController extends GetxController {
     // Set Iniital Date
     selectedDate.value = initialDate;
     dateController.value = dateFormat(selectedDate.value);
+    // Keyboard Listener
+
     // Detect Incoming Arguments
     if (Get.arguments['choice'] != null) {
       final choice = Choice.fromJson(Get.arguments['choice']);
@@ -230,7 +232,7 @@ class AddChoiceController extends GetxController {
           filled += 1;
         }
       }
-      if (isRandom.value) {
+      if (isRandom.value && !editing.value) {
         return filled < 2;
       }
       return filled < 1;
@@ -254,7 +256,7 @@ class AddChoiceController extends GetxController {
 
   void save() async {
     final options = optionsControllers.where((element) => element.value.text != '').map((e) => e.value.text).toList();
-    if ((!isRandom.value || editing.value) && options.length > 1) {
+    if (!isRandom.value || editing.value) {
       options.insert(0, decisionController.text);
     }
 
@@ -282,7 +284,7 @@ class AddChoiceController extends GetxController {
       options: options,
     );
 
-    if (isRandom.value) {
+    if (isRandom.value && !editing.value) {
       var choicePackage = await Get.to(
         () => const ChoiceOverviewView(),
         binding: ChoiceOverviewBinding(),

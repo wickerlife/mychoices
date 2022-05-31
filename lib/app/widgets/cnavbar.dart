@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/modules/add_choice/binding.dart';
-import 'package:mychoices/app/modules/add_choice/view.dart';
-import 'package:mychoices/app/modules/timeline/controller.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/modules/add_choice/binding.dart';
+import 'package:maichoices/app/modules/add_choice/view.dart';
+import 'package:maichoices/app/modules/timeline/controller.dart';
 import '../core/values/colors.dart';
 
 class CNavBar extends StatelessWidget {
@@ -26,10 +26,10 @@ class CNavBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(
-            Icons.view_day,
-            size: 24,
-          ),
+          // const Icon(
+          //   Icons.view_day,
+          //   size: 24,
+          // ),
           Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
@@ -96,10 +96,10 @@ class CNavBar extends StatelessWidget {
               ),
             ),
           ),
-          const Icon(
-            Icons.settings,
-            size: 24,
-          )
+          // const Icon(
+          //   Icons.settings,
+          //   size: 24,
+          // )
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,

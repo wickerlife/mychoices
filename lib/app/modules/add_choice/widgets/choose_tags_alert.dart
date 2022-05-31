@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/modules/add_choice/controller.dart';
-import 'package:mychoices/app/modules/add_choice/widgets/input_field.dart';
-import 'package:mychoices/app/modules/add_choice/widgets/tag_row.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/modules/add_choice/controller.dart';
+import 'package:maichoices/app/modules/add_choice/widgets/input_field.dart';
+import 'package:maichoices/app/modules/add_choice/widgets/tag_row.dart';
 
 class ChooseTagsAlert extends StatelessWidget {
   final AddChoiceController controller;
@@ -80,7 +80,7 @@ class ChooseTagsAlert extends StatelessWidget {
                 height: 1.0.hp,
               ),
               SizedBox(
-                height: 30.0.hp,
+                height: 35.0.hp,
                 child: Obx(
                   () => ListView(
                     children: [

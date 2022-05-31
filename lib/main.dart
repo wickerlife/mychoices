@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:mychoices/app/data/services/storage/service.dart';
+import 'package:maichoices/app/data/services/storage/service.dart';
 
-import 'package:mychoices/app/modules/timeline/binding.dart';
-import 'package:mychoices/app/modules/timeline/view.dart';
+import 'package:maichoices/app/modules/timeline/binding.dart';
+import 'package:maichoices/app/modules/timeline/view.dart';
 
-import 'package:mychoices/app/core/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'MaiChoices',
       home: const TimelinePage(),
       initialBinding: TimelineBinding(),
       builder: EasyLoading.init(),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/modules/timeline/controller.dart';
-import 'package:mychoices/app/modules/timeline/widgets/choice_item.dart';
-import 'package:mychoices/app/modules/timeline/widgets/timeline_item.dart';
-import 'package:mychoices/app/widgets/cappbar.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/modules/timeline/controller.dart';
+import 'package:maichoices/app/modules/timeline/widgets/add_fab.dart';
+import 'package:maichoices/app/modules/timeline/widgets/choice_item.dart';
+import 'package:maichoices/app/modules/timeline/widgets/timeline_item.dart';
+import 'package:maichoices/app/widgets/cappbar.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/widgets/cnavbar.dart';
+// TODO import 'package:maichoices/app/widgets/cnavbar.dart';
 
 class TimelinePage extends GetView<TimelineController> {
   const TimelinePage({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class TimelinePage extends GetView<TimelineController> {
                 () => CAppBar(
                   name: 'Hello, David',
                   subtitle: '${controller.allChoices.where((choice) => choice.compareDate(controller.getSelectedDay())).length} Choices on this day',
-                  trailingImage: 'assets/images/profile.jpg',
+                  // trailingImage: 'assets/images/profile.jpg',
                   imageFunction: () {},
                   trailingIcon: Icons.today,
                   trailingFunction: () {
@@ -112,7 +113,11 @@ class TimelinePage extends GetView<TimelineController> {
           ),
         ),
       ),
-      bottomNavigationBar: CNavBar(),
+      // bottomNavigationBar: CNavBar(),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.all(6.0.wp),
+        child: AddChoiceActionButton(),
+      ),
     );
   }
 }

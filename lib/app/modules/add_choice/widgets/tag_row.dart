@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/modules/add_choice/controller.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/modules/add_choice/controller.dart';
 
 class TagRow extends StatelessWidget {
   final AddChoiceController controller;

@@ -1,6 +1,6 @@
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/data/provider/choice/provider.dart';
-import 'package:mychoices/app/data/provider/tag/provider.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/provider/choice/provider.dart';
+import 'package:maichoices/app/data/provider/tag/provider.dart';
 
 class ChoiceRepository {
   ChoiceProvider choiceProvider;

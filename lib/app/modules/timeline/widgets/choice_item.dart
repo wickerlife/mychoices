@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/modules/choice/binding.dart';
-import 'package:mychoices/app/modules/choice/view.dart';
-import 'package:mychoices/app/modules/timeline/controller.dart';
-import 'package:mychoices/app/widgets/tag_item.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/modules/choice/binding.dart';
+import 'package:maichoices/app/modules/choice/view.dart';
+import 'package:maichoices/app/modules/timeline/controller.dart';
+import 'package:maichoices/app/widgets/tag_item.dart';
 
 class ChoiceItem extends StatelessWidget {
   final controller = Get.find<TimelineController>();

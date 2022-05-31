@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/core/values/colors.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/core/values/colors.dart';
 
 class InputField extends StatelessWidget {
   final TextEditingController controller;

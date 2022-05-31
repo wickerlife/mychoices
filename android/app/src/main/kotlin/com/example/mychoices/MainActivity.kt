@@ -1,4 +1,4 @@
-package com.example.mychoices
+package com.example.maichoices
 
 import io.flutter.embedding.android.FlutterActivity
 

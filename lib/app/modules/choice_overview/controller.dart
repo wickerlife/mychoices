@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:get/get.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/data/services/storage/repository.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/services/storage/repository.dart';
 
 class ChoiceOverviewController extends GetxController {
   ChoiceRepository choiceRepository;

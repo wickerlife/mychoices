@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/modules/choice_overview/controller.dart';
-import 'package:mychoices/app/modules/timeline/view.dart';
-import 'package:mychoices/app/widgets/cappbar.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/core/utils/extensions.dart';
-import 'package:mychoices/app/widgets/cbutton.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/modules/choice_overview/controller.dart';
+import 'package:maichoices/app/modules/timeline/view.dart';
+import 'package:maichoices/app/widgets/cappbar.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
+import 'package:maichoices/app/widgets/cbutton.dart';
 
 class ChoiceOverviewView extends GetView<ChoiceOverviewController> {
   const ChoiceOverviewView({Key? key}) : super(key: key);
@@ -187,57 +187,60 @@ class ChoiceOverviewView extends GetView<ChoiceOverviewController> {
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 6.0.wp,
-          ),
-          child: ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              Obx(
-                () => Padding(
-                  padding: EdgeInsets.only(
-                    top: controller.chosen.value ? 2.0.hp : 0.0,
-                  ),
-                  child: controller.chosen.value
-                      ? TextButton(
-                          onPressed: () {
-                            controller.choseRandomly();
-                          },
-                          child: Text(
-                            'Choose Again',
-                            style: TextStyle(
-                              color: LightColors.accentDark,
-                              fontFamily: 'Raleway',
-                              fontSize: 12.0.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : null,
-                ),
-              ),
               Padding(
-                padding: EdgeInsets.only(
-                  top: 2.0.hp,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 6.0.wp,
                 ),
-                child: Obx(
-                  () => CButton(
-                    enabled: true,
-                    title: controller.chosen.value ? 'Save' : 'Choose',
-                    onTap: () {
-                      controller.chosen.value ? controller.saveOption() : controller.choseRandomly();
-                    },
-                    dark: true,
-                    darkColor: LightColors.accentDark,
-                    shadow: true,
-                  ),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    Obx(
+                      () => Padding(
+                        padding: EdgeInsets.only(
+                          top: controller.chosen.value ? 2.0.hp : 0.0,
+                        ),
+                        child: controller.chosen.value
+                            ? TextButton(
+                                onPressed: () {
+                                  controller.choseRandomly();
+                                },
+                                child: Text(
+                                  'Choose Again',
+                                  style: TextStyle(
+                                    color: LightColors.accentDark,
+                                    fontFamily: 'Raleway',
+                                    fontSize: 12.0.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 2.0.hp,
+                      ),
+                      child: Obx(
+                        () => Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 6.0.wp,
+                          ),
+                          child: CButton(
+                            enabled: true,
+                            title: controller.chosen.value ? 'Save' : 'Choose',
+                            onTap: () {
+                              controller.chosen.value ? controller.saveOption() : controller.choseRandomly();
+                            },
+                            dark: true,
+                            darkColor: LightColors.accentDark,
+                            shadow: true,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

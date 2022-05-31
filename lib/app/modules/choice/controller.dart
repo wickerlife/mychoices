@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/data/services/storage/repository.dart';
-import 'package:mychoices/app/modules/timeline/controller.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/services/storage/repository.dart';
+import 'package:maichoices/app/modules/timeline/controller.dart';
 
 class ChoiceController extends GetxController {
   TimelineController controller = Get.find<TimelineController>();

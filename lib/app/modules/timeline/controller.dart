@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mychoices/app/core/values/colors.dart';
-import 'package:mychoices/app/data/mock_data.dart';
-import 'package:mychoices/app/data/models/choice.dart';
-import 'package:mychoices/app/data/services/storage/repository.dart';
+import 'package:maichoices/app/core/values/colors.dart';
+import 'package:maichoices/app/data/mock_data.dart';
+import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/services/storage/repository.dart';
 import 'package:date_utils/date_utils.dart' as date_util;
 import 'package:intl/intl.dart';
 
@@ -144,7 +144,11 @@ class TimelineController extends GetxController {
         ),
       ).toSet().toList().forEach(
         (element) {
-          if (element.day <= DateTime.now().day) totalDays.add(element);
+          if (element.month == DateTime.now().month) {
+            if (element.day <= DateTime.now().day) totalDays.add(element);
+          } else {
+            totalDays.add(element);
+          }
         },
       );
       if (totalDays.isEmpty) {
