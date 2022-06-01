@@ -17,22 +17,22 @@ class AddChoiceActionButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          offset: const Offset(2, 2),
+          offset: const Offset(4, 4),
           blurRadius: 8,
-          color: LightColors.accentDark.withOpacity(0.4),
+          color: LightColors.accentDark.withOpacity(0.2),
         ),
       ]),
       child: Material(
         color: Colors.transparent,
         child: Ink(
-          width: 14.6.wp,
-          height: 14.6.wp,
+          width: 16.0.wp,
+          height: 16.0.wp,
           decoration: BoxDecoration(
-            color: LightColors.accentDark,
+            color: LightColors.yellow,
             borderRadius: BorderRadius.circular(14),
           ),
           child: InkWell(
-            splashColor: LightColors.accentLight,
+            splashColor: LightColors.yellow.withOpacity(0.2),
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
@@ -71,7 +71,7 @@ class AddChoiceActionButton extends StatelessWidget {
                   Icon(
                     Icons.add,
                     size: 24,
-                    color: LightColors.primary,
+                    color: LightColors.accentDark,
                   ),
                 ],
               ),

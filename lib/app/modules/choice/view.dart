@@ -287,7 +287,7 @@ class ChoiceView extends GetView<ChoiceController> {
                                                 .toList(),
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -299,6 +299,7 @@ class ChoiceView extends GetView<ChoiceController> {
                         left: 6.0.wp,
                         right: 6.0.wp,
                         bottom: 6.0.wp,
+                        top: 6.0.wp,
                       ),
                       child: CButton(
                         enabled: true,

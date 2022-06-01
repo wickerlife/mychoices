@@ -46,7 +46,7 @@ class CAppBar extends StatelessWidget {
                 ),
               if (leadingIcon != null)
                 SizedBox(
-                  width: 6.0.wp,
+                  width: 1.5.wp,
                 ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

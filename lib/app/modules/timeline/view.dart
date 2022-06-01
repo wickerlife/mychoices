@@ -114,8 +114,9 @@ class TimelinePage extends GetView<TimelineController> {
         ),
       ),
       // bottomNavigationBar: CNavBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(6.0.wp),
+        padding: EdgeInsets.all(2.9.wp),
         child: AddChoiceActionButton(),
       ),
     );
