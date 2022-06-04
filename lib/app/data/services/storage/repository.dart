@@ -1,5 +1,7 @@
 import 'package:maichoices/app/data/models/choice.dart';
+import 'package:maichoices/app/data/models/settings.dart';
 import 'package:maichoices/app/data/provider/choice/provider.dart';
+import 'package:maichoices/app/data/provider/settings/provider.dart';
 import 'package:maichoices/app/data/provider/tag/provider.dart';
 
 class ChoiceRepository {
@@ -22,4 +24,12 @@ class TagRepository {
   List<Tag> readTags() => tagProvider.readTags();
 
   void writeTags(List<Tag> tags) => tagProvider.writeTags(tags);
+}
+
+class SettingRepository {
+  SettingProvider settingProvider;
+  SettingRepository({required this.settingProvider});
+
+  Settings readSettings() => settingProvider.readSettings();
+  void writeSettings(Settings settings) => settingProvider.writeSettings(settings);
 }

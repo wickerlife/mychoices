@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:get/get.dart';
 import 'package:maichoices/app/data/models/choice.dart';
 import 'package:maichoices/app/data/services/storage/repository.dart';
