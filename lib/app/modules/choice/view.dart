@@ -60,7 +60,7 @@ class ChoiceView extends GetView<ChoiceController> {
                       child: Obx(
                         () => Row(
                           children: [
-                            if (controller.choice.value.relevance != relevanceEnum.none) ...[
+                            if (controller.choice.value.relevance != RelevanceEnum.none) ...[
                               Container(
                                 width: 16,
                                 height: 16,

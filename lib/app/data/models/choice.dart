@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:uuid/uuid.dart';
 
-enum categories { relationship, personal, family, friends, life, hobbies, goals, education, finances, work, others }
+enum Categories { relationship, personal, family, friends, life, hobbies, goals, education, finances, work, others }
 
-enum relevanceEnum { none, low, medium, high }
+enum RelevanceEnum { none, low, medium, high }
 
 class ChoicePackage {
   Choice? choice;
@@ -21,17 +21,17 @@ class ChoicePackage {
 }
 
 var categoriesMap = {
-  categories.personal: const Category(name: 'Personal', icon: Icons.sentiment_very_satisfied),
-  categories.relationship: const Category(name: 'Relationship', icon: Icons.people),
-  categories.family: const Category(name: 'Family', icon: Icons.family_restroom),
-  categories.friends: const Category(name: 'Friends', icon: Icons.sports_kabaddi),
-  categories.life: const Category(name: 'Life & Entertainment', icon: Icons.sports_basketball),
-  categories.hobbies: const Category(name: 'Hobbies', icon: Icons.brush),
-  categories.goals: const Category(name: 'Goals', icon: Icons.emoji_events),
-  categories.education: const Category(name: 'Education', icon: Icons.school),
-  categories.work: const Category(name: 'Work', icon: Icons.work),
-  categories.finances: const Category(name: 'Finances', icon: Icons.payments),
-  categories.others: const Category(name: 'Others', icon: Icons.category)
+  Categories.personal: const Category(name: 'Personal', icon: Icons.sentiment_very_satisfied),
+  Categories.relationship: const Category(name: 'Relationship', icon: Icons.people),
+  Categories.family: const Category(name: 'Family', icon: Icons.family_restroom),
+  Categories.friends: const Category(name: 'Friends', icon: Icons.sports_kabaddi),
+  Categories.life: const Category(name: 'Life & Entertainment', icon: Icons.sports_basketball),
+  Categories.hobbies: const Category(name: 'Hobbies', icon: Icons.brush),
+  Categories.goals: const Category(name: 'Goals', icon: Icons.emoji_events),
+  Categories.education: const Category(name: 'Education', icon: Icons.school),
+  Categories.work: const Category(name: 'Work', icon: Icons.work),
+  Categories.finances: const Category(name: 'Finances', icon: Icons.payments),
+  Categories.others: const Category(name: 'Others', icon: Icons.category)
 };
 
 class Category {
@@ -98,7 +98,7 @@ class Choice {
   Category category;
   List<dynamic>? tags;
   DateTime date;
-  relevanceEnum relevance;
+  RelevanceEnum relevance;
   bool random;
 
   Choice({
@@ -134,7 +134,7 @@ class Choice {
     Category? category,
     List<Tag>? tags,
     DateTime? date,
-    relevanceEnum? relevance,
+    RelevanceEnum? relevance,
     bool? random,
   }) =>
       Choice(
@@ -158,7 +158,7 @@ class Choice {
         category: categoriesMap.entries.where((element) => element.value.name == json['category']).map((e) => categoriesMap[e.key]).toList()[0]!,
         tags: (json['tags'] == null || List<String>.from(json['tags']).isEmpty) ? null : json['tags'].map((name) => Tag(name: name)).toList(),
         date: DateTime.parse(json['date']),
-        relevance: EnumToString.fromString(relevanceEnum.values, json['relevance'])!,
+        relevance: EnumToString.fromString(RelevanceEnum.values, json['relevance'])!,
         random: json['random'],
       );
 

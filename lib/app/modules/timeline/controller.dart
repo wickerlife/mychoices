@@ -112,11 +112,11 @@ class TimelineController extends GetxController {
   }
 
   Color getChoiceRelevanceColor(Choice choice) {
-    if (choice.relevance == relevanceEnum.high) {
+    if (choice.relevance == RelevanceEnum.high) {
       return LightColors.red;
-    } else if (choice.relevance == relevanceEnum.medium) {
+    } else if (choice.relevance == RelevanceEnum.medium) {
       return LightColors.yellow;
-    } else if (choice.relevance == relevanceEnum.low) {
+    } else if (choice.relevance == RelevanceEnum.low) {
       return LightColors.blue;
     }
     return Colors.transparent;

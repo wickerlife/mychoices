@@ -54,12 +54,12 @@ class AddChoiceActionButton extends StatelessWidget {
                   duration: const Duration(seconds: 1),
                 );
               } else {
-                EasyLoading.showError(
-                  'Choice was not recorded',
-                  maskType: EasyLoadingMaskType.black,
-                  dismissOnTap: true,
-                  duration: const Duration(seconds: 1),
-                );
+                // EasyLoading.showError(
+                //   'Choice was not recorded',
+                //   maskType: EasyLoadingMaskType.black,
+                //   dismissOnTap: true,
+                //   duration: const Duration(seconds: 1),
+                // );
               }
             },
             child: Padding(

@@ -313,10 +313,10 @@ class AddChoiceView extends GetView<AddChoiceController> {
                             Obx(
                               () => CCard(
                                 title: 'Relevance',
-                                trailingAction: (controller.selectedRelevance.value != relevanceEnum.none)
+                                trailingAction: (controller.selectedRelevance.value != RelevanceEnum.none)
                                     ? TextButton.icon(
                                         onPressed: () {
-                                          controller.selectedRelevance.value = relevanceEnum.none;
+                                          controller.selectedRelevance.value = RelevanceEnum.none;
                                         },
                                         style: ButtonStyle(
                                           minimumSize: MaterialStateProperty.resolveWith((states) => Size.zero),
@@ -343,15 +343,15 @@ class AddChoiceView extends GetView<AddChoiceController> {
                                   children: [
                                     RelevanceChip(
                                       controller: controller,
-                                      relevance: relevanceEnum.high,
+                                      relevance: RelevanceEnum.high,
                                     ),
                                     RelevanceChip(
                                       controller: controller,
-                                      relevance: relevanceEnum.medium,
+                                      relevance: RelevanceEnum.medium,
                                     ),
                                     RelevanceChip(
                                       controller: controller,
-                                      relevance: relevanceEnum.low,
+                                      relevance: RelevanceEnum.low,
                                     ),
                                   ],
                                 ),

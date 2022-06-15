@@ -10,9 +10,9 @@ final modelUser = User(
 final modelChoice = Choice(
     title: 'Date',
     choice: ChoiceValue(value: 'Wednesday'),
-    category: categoriesMap[categories.relationship]!,
+    category: categoriesMap[Categories.relationship]!,
     date: DateTime(2022, 2, 26, 6, 30),
-    relevance: relevanceEnum.high,
+    relevance: RelevanceEnum.high,
     random: true,
     tags: const [
       Tag(name: 'hashtag'),

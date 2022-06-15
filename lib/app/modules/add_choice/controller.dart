@@ -40,7 +40,7 @@ class AddChoiceController extends GetxController {
   final savedSelection = false.obs;
 
   // Relevance
-  final selectedRelevance = relevanceEnum.none.obs;
+  final selectedRelevance = RelevanceEnum.none.obs;
 
   // Description
   final descriptionController = TextEditingController();
@@ -208,11 +208,11 @@ class AddChoiceController extends GetxController {
     }
   }
 
-  Color getRelevanceColor(relevanceEnum relevance) {
+  Color getRelevanceColor(RelevanceEnum relevance) {
     Color color;
-    if (relevance == relevanceEnum.high) {
+    if (relevance == RelevanceEnum.high) {
       color = LightColors.red;
-    } else if (relevance == relevanceEnum.medium) {
+    } else if (relevance == RelevanceEnum.medium) {
       color = LightColors.yellow;
     } else {
       color = LightColors.blue;

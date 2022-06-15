@@ -6,7 +6,7 @@ import 'package:maichoices/app/modules/add_choice/controller.dart';
 
 class RelevanceChip extends StatelessWidget {
   final AddChoiceController controller;
-  final relevanceEnum relevance;
+  final RelevanceEnum relevance;
   const RelevanceChip({
     Key? key,
     required this.controller,

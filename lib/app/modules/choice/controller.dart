@@ -15,13 +15,11 @@ class ChoiceController extends GetxController {
   final choice = Choice.fromJson(Get.arguments['choice']).obs;
   final edited = false.obs;
 
-
-
-  Color getRelevanceColor(relevanceEnum relevance) {
+  Color getRelevanceColor(RelevanceEnum relevance) {
     Color color;
-    if (relevance == relevanceEnum.high) {
+    if (relevance == RelevanceEnum.high) {
       color = LightColors.red;
-    } else if (relevance == relevanceEnum.medium) {
+    } else if (relevance == RelevanceEnum.medium) {
       color = LightColors.yellow;
     } else {
       color = LightColors.blue;
