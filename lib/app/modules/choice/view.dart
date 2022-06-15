@@ -42,7 +42,7 @@ class ChoiceView extends GetView<ChoiceController> {
                       'date': controller.choice.value.date.toIso8601String(),
                     },
                   );
-                  if (choicePackage.success) {
+                  if (choicePackage != null && choicePackage.success) {
                     controller.editChoice(choicePackage.choice);
                   }
                 },
