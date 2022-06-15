@@ -15,17 +15,6 @@ class ChoiceOverviewController extends GetxController {
   final chosen = false.obs;
   final chosenOption = ''.obs;
 
-  @override
-  void onInit() {
-    // Load Repository
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void choseRandomly() {
     final random = Random();
     var i = random.nextInt(choice.value.options!.length);

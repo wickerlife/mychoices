@@ -2,7 +2,7 @@
     package="com.example.maichoices">
    <application
         android:label="MaiChoices"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/maichoices_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

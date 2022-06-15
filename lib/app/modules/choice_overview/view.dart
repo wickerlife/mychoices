@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:maichoices/app/data/models/choice.dart';
 import 'package:maichoices/app/modules/choice_overview/controller.dart';
-import 'package:maichoices/app/modules/timeline/view.dart';
 import 'package:maichoices/app/widgets/cappbar.dart';
 import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/core/utils/extensions.dart';

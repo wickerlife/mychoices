@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:maichoices/app/core/utils/extensions.dart';
 import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/data/models/choice.dart';

@@ -8,14 +8,15 @@ import 'package:maichoices/app/modules/timeline/widgets/choice_item.dart';
 import 'package:maichoices/app/modules/timeline/widgets/timeline_item.dart';
 import 'package:maichoices/app/widgets/cappbar.dart';
 import 'package:get/get.dart';
-// TODO import 'package:maichoices/app/widgets/cnavbar.dart';
 
 class TimelinePage extends GetView<TimelineController> {
   const TimelinePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
+      backgroundColor: LightColors.primary,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
@@ -116,7 +117,7 @@ class TimelinePage extends GetView<TimelineController> {
       // bottomNavigationBar: CNavBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(2.9.wp),
+        padding: EdgeInsets.only(left: 2.9.wp, bottom: 6.0.wp),
         child: AddChoiceActionButton(),
       ),
     );

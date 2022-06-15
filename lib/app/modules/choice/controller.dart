@@ -15,17 +15,7 @@ class ChoiceController extends GetxController {
   final choice = Choice.fromJson(Get.arguments['choice']).obs;
   final edited = false.obs;
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
 
   Color getRelevanceColor(relevanceEnum relevance) {
     Color color;

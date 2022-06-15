@@ -13,7 +13,7 @@ class CAppBar extends StatelessWidget {
   final String subtitle;
   final bool dark;
 
-  CAppBar({
+  const CAppBar({
     Key? key,
     required this.name,
     required this.subtitle,
