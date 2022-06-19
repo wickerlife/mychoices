@@ -14,6 +14,39 @@ class AddChoiceActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      backgroundColor: LightColors.yellow,
+      foregroundColor: LightColors.accentDark,
+      splashColor: LightColors.yellow.withAlpha(100),
+      icon: const Icon(Icons.add),
+      onPressed: () async {
+        dynamic choicePackage = await Get.to(
+          () => const AddChoiceView(),
+          binding: AddChoiceBinding(),
+          arguments: {
+            'date': controller.getSelectedDay().toIso8601String(),
+          },
+        );
+        if (choicePackage is ChoicePackage && choicePackage.success) {
+          controller.addChoice(choicePackage.choice!);
+
+          EasyLoading.showSuccess(
+            'New Choice Recorded!',
+            maskType: EasyLoadingMaskType.black,
+            dismissOnTap: true,
+            duration: const Duration(seconds: 1),
+          );
+        } else {
+          // EasyLoading.showError(
+          //   'Choice was not recorded',
+          //   maskType: EasyLoadingMaskType.black,
+          //   dismissOnTap: true,
+          //   duration: const Duration(seconds: 1),
+          // );
+        }
+      },
+      label: Text("Add Choice"),
+    );
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/data/services/storage/service.dart';
 
 import 'package:maichoices/app/modules/timeline/binding.dart';
@@ -22,6 +23,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'MaiChoices',
       home: const TimelinePage(),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: LightColors.yellow,
+        brightness: Brightness.light,
+      ),
       initialBinding: TimelineBinding(),
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
