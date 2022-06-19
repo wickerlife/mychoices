@@ -17,9 +17,12 @@ class TimelineController extends GetxController {
   final firstDay = modelUser.firstDay;
   final today = DateTime.now().obs;
   late ScrollController timelineScrollController = ScrollController();
-  late PageController pageViewController = PageController();
   final totalDays = <DateTime>[].obs;
   final selectedIndex = 0.obs;
+
+  // Day PageView Controller
+  late PageController pageViewController = PageController();
+  final isPageViewScrolling = false.obs;
 
   // Choice List Controller
   @override
@@ -99,9 +102,37 @@ class TimelineController extends GetxController {
   }
 
   void showToday() {
+    final int temp = selectedIndex.value;
     selectedIndex.value = 0;
+
+    if (temp > 11) {
+      timelineScrollController.jumpTo(0.0);
+      pageViewController.jumpToPage(0);
+    }
     // Scroll to selected value
-    timelineScrollController.animateTo(0.0, duration: const Duration(milliseconds: 1000), curve: Curves.ease);
+    timelineScrollController.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    pageViewController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  void navigateToDay(int index) async {
+    final int temp = selectedIndex.value;
+    if (index == temp) {
+      return;
+    }
+
+    if (totalDays[index].isBefore(firstDay)) {
+      return;
+    } else {
+      selectedIndex.value = index;
+    }
+
+    if ((temp - index).abs() > 11) {
+      pageViewController.jumpToPage(index);
+    } else {
+      isPageViewScrolling.value = true;
+      await pageViewController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+      isPageViewScrolling.value = false;
+    }
   }
 
   bool isRandomChoice(int index) {
@@ -163,18 +194,6 @@ class TimelineController extends GetxController {
         totalDays[totalDays.length - 1 - i] = temp;
       }
       today.value = DateTime.now();
-    }
-  }
-
-  void navigateToDay(int index, {bool pageView = false}) {
-    if (totalDays[index].isBefore(firstDay)) {
-      return;
-    } else {
-      selectedIndex.value = index;
-    }
-
-    if (pageView == false) {
-      pageViewController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
     }
   }
 }

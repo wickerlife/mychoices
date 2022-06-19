@@ -4,8 +4,8 @@ import 'package:maichoices/app/core/utils/extensions.dart';
 import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/modules/timeline/controller.dart';
 import 'package:maichoices/app/modules/timeline/widgets/add_fab.dart';
-import 'package:maichoices/app/modules/timeline/widgets/choice_item.dart';
 import 'package:maichoices/app/modules/timeline/widgets/timeline_item.dart';
+import 'package:maichoices/app/modules/timeline/widgets/timeline_page_item.dart';
 import 'package:maichoices/app/widgets/cappbar.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +44,7 @@ class TimelinePage extends GetView<TimelineController> {
                   width: Get.width,
                   child: Obx(
                     () => ListView.builder(
+                      addAutomaticKeepAlives: false,
                       physics: const ClampingScrollPhysics(),
                       reverse: true,
                       scrollDirection: Axis.horizontal,
@@ -52,11 +53,6 @@ class TimelinePage extends GetView<TimelineController> {
                       itemBuilder: (BuildContext context, int index) {
                         if ((index > controller.totalDays.length - 1)) {
                           return Container();
-                          //   return const Center(
-                          //   child: CircularProgressIndicator(
-                          //     color: LightColors.primaryLight,
-                          //   ),
-                          // );
                         }
                         return TimelineItem(index: index);
                       },
@@ -66,60 +62,23 @@ class TimelinePage extends GetView<TimelineController> {
                 ),
               ),
 
-              // Choices ListView
+              // Choices PageView
               Expanded(
                 child: PageView.builder(
                   reverse: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.totalDays.length,
                   controller: controller.pageViewController,
                   physics: const ClampingScrollPhysics(),
                   onPageChanged: (index) {
-                    controller.navigateToDay(index, pageView: true);
+                    if (!controller.isPageViewScrolling.value) controller.navigateToDay(index);
                   },
                   itemBuilder: ((context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        top: 2.0.hp,
-                      ),
-                      child: Obx(
-                        () => Container(
-                          child: (controller.allChoices
-                                  .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
-                                  .toList()
-                                  .isEmpty)
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: 8.0.hp,
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'No choices recorded on this day',
-                                      style: TextStyle(
-                                        color: LightColors.primaryDark,
-                                        fontFamily: 'Raleway',
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : ListView(
-                                  children: [
-                                    ...controller.allChoices
-                                        .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
-                                        .toList()
-                                        .map((choice) => ChoiceItem(
-                                              choice: choice,
-                                            ))
-                                        .toList(),
-                                    SizedBox(
-                                      height: 3.0.hp,
-                                    )
-                                  ],
-                                ),
-                        ),
-                      ),
-                    );
+                    if ((index > controller.totalDays.length - 1)) {
+                      return Container();
+                    }
+                    return TimelinePageItem(index: index);
                   }),
+                  itemCount: controller.totalDays.length,
                 ),
               ),
             ],
