@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maichoices/app/core/utils/extensions.dart';
 import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/data/mock_data.dart';
 import 'package:maichoices/app/data/models/choice.dart';
@@ -102,19 +103,10 @@ class TimelineController extends GetxController {
   }
 
   void showToday() {
-    final int temp = selectedIndex.value;
-    selectedIndex.value = 0;
-
-    if (temp > 11) {
-      timelineScrollController.jumpTo(0.0);
-      pageViewController.jumpToPage(0);
-    }
-    // Scroll to selected value
-    timelineScrollController.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
-    pageViewController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    showDay(0, fromTimeline: true);
   }
 
-  void navigateToDay(int index) async {
+  void showDay(int index, {bool fromTimeline = false, bool skipButton = false}) async {
     final int temp = selectedIndex.value;
     if (index == temp) {
       return;
@@ -122,15 +114,21 @@ class TimelineController extends GetxController {
 
     if (totalDays[index].isBefore(firstDay)) {
       return;
+    }
+
+    selectedIndex.value = index;
+
+    if (skipButton) {
+      timelineScrollController.jumpTo(index.toDouble() * 24.0.wp);
     } else {
-      selectedIndex.value = index;
+      timelineScrollController.animateTo(index.toDouble() * 24.0.wp, duration: const Duration(milliseconds: 150), curve: Curves.ease);
     }
 
     if ((temp - index).abs() > 11) {
       pageViewController.jumpToPage(index);
     } else {
       isPageViewScrolling.value = true;
-      await pageViewController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+      await pageViewController.animateToPage(index, duration: const Duration(milliseconds: 100), curve: Curves.ease);
       isPageViewScrolling.value = false;
     }
   }
