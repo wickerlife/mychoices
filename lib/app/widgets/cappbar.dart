@@ -28,6 +28,70 @@ class CAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+      toolbarHeight: 26.0.wp,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: TextStyle(
+                fontSize: 22.0.sp, fontWeight: FontWeight.bold, color: dark ? LightColors.primary : LightColors.accentDark, fontFamily: 'Raleway'),
+          ),
+          Text(
+            subtitle,
+            style: TextStyle(
+                fontSize: 12.0.sp,
+                fontWeight: FontWeight.w600,
+                color: dark ? LightColors.primaryLight : LightColors.primaryDark,
+                fontFamily: 'Raleway'),
+          ),
+        ],
+      ),
+      leading: (leadingIcon != null)
+          ? IconButton(
+              icon: Icon(
+                leadingIcon,
+                size: 24,
+                color: dark ? LightColors.primary : LightColors.accentDark,
+              ),
+              onPressed: leadingFunction,
+            )
+          : null,
+      actions: [
+        if (trailingIcon != null)
+          IconButton(
+            icon: Icon(
+              trailingIcon,
+              size: 24,
+              color: dark ? LightColors.primary : LightColors.accentDark,
+            ),
+            onPressed: trailingFunction,
+          ),
+        if (trailingIcon != null && trailingImage != null)
+          SizedBox(
+            width: 6.0.wp,
+          ),
+        if (trailingImage != null)
+          GestureDetector(
+            onTap: imageFunction,
+            child: Container(
+              decoration: const BoxDecoration(color: LightColors.primary),
+              height: 11.5.wp,
+              width: 11.5.wp,
+              child: ClipRRect(
+                child: Image.asset(
+                  trailingImage!,
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+          ),
+      ],
+    );
     return Container(
       padding: EdgeInsets.all(6.0.wp),
       child: Row(
