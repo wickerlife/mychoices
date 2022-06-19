@@ -70,7 +70,7 @@ class TimelinePage extends GetView<TimelineController> {
                   controller: controller.pageViewController,
                   physics: const ClampingScrollPhysics(),
                   onPageChanged: (index) {
-                    if (!controller.isPageViewScrolling.value) controller.navigateToDay(index);
+                    if (!controller.isPageViewScrolling.value) controller.showDay(index, fromTimeline: true);
                   },
                   itemBuilder: ((context, index) {
                     if ((index > controller.totalDays.length - 1)) {

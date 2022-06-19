@@ -39,7 +39,7 @@ class TimelineItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14),
               ),
               onTap: () {
-                controller.navigateToDay(index);
+                controller.showDay(index, fromTimeline: true);
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 2.8.wp),
