@@ -68,46 +68,58 @@ class TimelinePage extends GetView<TimelineController> {
 
               // Choices ListView
               Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 2.0.hp,
-                  ),
-                  child: Obx(
-                    () => Container(
-                      child: (controller.allChoices
-                              .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
-                              .toList()
-                              .isEmpty)
-                          ? Padding(
-                              padding: EdgeInsets.only(
-                                bottom: 8.0.hp,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'No choices recorded on this day',
-                                  style: TextStyle(
-                                    color: LightColors.primaryDark,
-                                    fontFamily: 'Raleway',
+                child: PageView.builder(
+                  reverse: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.totalDays.length,
+                  controller: controller.pageViewController,
+                  physics: const ClampingScrollPhysics(),
+                  onPageChanged: (index) {
+                    controller.navigateToDay(index, pageView: true);
+                  },
+                  itemBuilder: ((context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        top: 2.0.hp,
+                      ),
+                      child: Obx(
+                        () => Container(
+                          child: (controller.allChoices
+                                  .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
+                                  .toList()
+                                  .isEmpty)
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: 8.0.hp,
                                   ),
-                                ),
-                              ),
-                            )
-                          : ListView(
-                              children: [
-                                ...controller.allChoices
-                                    .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
-                                    .toList()
-                                    .map((choice) => ChoiceItem(
-                                          choice: choice,
-                                        ))
-                                    .toList(),
-                                SizedBox(
-                                  height: 3.0.hp,
+                                  child: const Center(
+                                    child: Text(
+                                      'No choices recorded on this day',
+                                      style: TextStyle(
+                                        color: LightColors.primaryDark,
+                                        fontFamily: 'Raleway',
+                                      ),
+                                    ),
+                                  ),
                                 )
-                              ],
-                            ),
-                    ),
-                  ),
+                              : ListView(
+                                  children: [
+                                    ...controller.allChoices
+                                        .where((choice) => choice.compareDate(controller.totalDays[controller.selectedIndex.value]))
+                                        .toList()
+                                        .map((choice) => ChoiceItem(
+                                              choice: choice,
+                                            ))
+                                        .toList(),
+                                    SizedBox(
+                                      height: 3.0.hp,
+                                    )
+                                  ],
+                                ),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
               ),
             ],

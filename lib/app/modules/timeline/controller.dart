@@ -17,6 +17,7 @@ class TimelineController extends GetxController {
   final firstDay = modelUser.firstDay;
   final today = DateTime.now().obs;
   late ScrollController timelineScrollController = ScrollController();
+  late PageController pageViewController = PageController();
   final totalDays = <DateTime>[].obs;
   final selectedIndex = 0.obs;
 
@@ -46,6 +47,7 @@ class TimelineController extends GetxController {
   @override
   void onClose() {
     timelineScrollController.dispose();
+    pageViewController.dispose();
     super.onClose();
   }
 
@@ -161,6 +163,18 @@ class TimelineController extends GetxController {
         totalDays[totalDays.length - 1 - i] = temp;
       }
       today.value = DateTime.now();
+    }
+  }
+
+  void navigateToDay(int index, {bool pageView = false}) {
+    if (totalDays[index].isBefore(firstDay)) {
+      return;
+    } else {
+      selectedIndex.value = index;
+    }
+
+    if (pageView == false) {
+      pageViewController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
     }
   }
 }

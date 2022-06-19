@@ -39,14 +39,10 @@ class TimelineItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14),
               ),
               onTap: () {
-                if (controller.totalDays[index].isBefore(controller.firstDay)) {
-                  return;
-                } else {
-                  controller.selectedIndex.value = index;
-                }
+                controller.navigateToDay(index);
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 3.0.wp),
+                padding: EdgeInsets.symmetric(vertical: 2.8.wp),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
