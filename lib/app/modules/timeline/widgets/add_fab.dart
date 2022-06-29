@@ -14,7 +14,6 @@ class AddChoiceActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      foregroundColor: LightColors.accentDark,
       icon: const Icon(Icons.add),
       onPressed: () async {
         dynamic choicePackage = await Get.to(

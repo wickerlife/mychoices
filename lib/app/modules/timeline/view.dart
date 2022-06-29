@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maichoices/app/core/utils/extensions.dart';
-import 'package:maichoices/app/core/values/colors.dart';
 import 'package:maichoices/app/modules/timeline/controller.dart';
 import 'package:maichoices/app/modules/timeline/widgets/add_fab.dart';
 import 'package:maichoices/app/modules/timeline/widgets/timeline_item.dart';
@@ -16,7 +15,6 @@ class TimelinePage extends GetView<TimelineController> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
-      backgroundColor: LightColors.primary,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(

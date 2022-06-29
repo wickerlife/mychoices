@@ -24,9 +24,7 @@ class TimelineItem extends StatelessWidget {
             width: 18.0.wp,
             decoration: BoxDecoration(
               color: controller.isCurrentDay(index)
-                  ? controller.isSelected(index)
-                      ? LightColors.accentDark
-                      : LightColors.accentLight
+                  ? Theme.of(context).primaryColor
                   : controller.isSelected(index)
                       ? LightColors.primaryLight
                       : null,
@@ -64,7 +62,7 @@ class TimelineItem extends StatelessWidget {
                           fontSize: 18.0.sp,
                           color: (controller.isValidDate(index))
                               ? controller.isCurrentDay(index)
-                                  ? LightColors.primary
+                                  ? LightColors.primary // TODO on primary text color
                                   : LightColors.accentDark
                               : LightColors.primaryDark),
                     ),

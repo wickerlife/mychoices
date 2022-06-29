@@ -29,6 +29,7 @@ class CAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0.0,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       toolbarHeight: 26.0.wp,
@@ -39,6 +40,9 @@ class CAppBar extends StatelessWidget {
             name,
             style: TextStyle(
                 fontSize: 22.0.sp, fontWeight: FontWeight.bold, color: dark ? LightColors.primary : LightColors.accentDark, fontFamily: 'Raleway'),
+          ),
+          SizedBox(
+            height: 0.5.wp,
           ),
           Text(
             subtitle,
@@ -63,6 +67,7 @@ class CAppBar extends StatelessWidget {
       actions: [
         if (trailingIcon != null)
           IconButton(
+            splashRadius: 3.0.wp,
             icon: Icon(
               trailingIcon,
               size: 24,
